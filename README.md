@@ -11,8 +11,8 @@ Chapter4 : pillow image processing, pygame project
 
 Chapter5 : matplotlib module, Web crawling(additional : basic of HTML), CVS data analyze
 
-Data Structure Lecture Note
-Contents(Curriculum)
+Next Lecture  :  
+Data Structure Lecture Note Contents(Curriculum)
 
 
 
