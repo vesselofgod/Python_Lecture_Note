@@ -41,7 +41,7 @@ except Exception as err:
 
 def text(arg, x, y):
     font = pygame.font.Font('freesansbold.ttf', 24)
-    text = font.render("Score: " + str(arg).zfill(6), True, (255, 255, 255))
+    text = font.render("Score: " + str(arg).zfill(6), True, (0, 0, 0))#zfill : 앞자리를 0으로 채움
     textRect = text.get_rect()#텍스트 객체를 출력위치에 가져옴
     textRect.centerx = x#출력할 때의 x좌표를 설정한다
     textRect.centery = y
@@ -51,7 +51,7 @@ def text(arg, x, y):
 running=True #boolean flag
 
 while running:
-    screen.fill((0, 0, 0))#화면을 색칠함.
+    screen.fill((255, 255, 255))#화면을 색칠함.
 
         #게임 종료조건, 우측 상단에 X 버튼 누르면 pygame모듈과 프로그램이 종료되는 코드
     for event in pygame.event.get():
@@ -70,7 +70,7 @@ while running:
     spaceshippos = (position[0], position[1])#마우스의 위치를 우주선의 위치로 설정
     
     screen.blit(spaceshipimg, spaceshippos)#우주선을 그려줌.
-    spaceshiprect = pygame.Rect(spaceshipimg.get_rect())
+    spaceshiprect = pygame.Rect(spaceshipimg.get_rect())#이미지의 표면의 좌표를 가져와서 객체의 위치 지정
     spaceshiprect.left = spaceshippos[0]
     spaceshiprect.top = spaceshippos[1]
     
@@ -78,7 +78,7 @@ while running:
     if asteroidtimer <= 0:
         #운석을 소환함, first,second parameter는 소환위치
         asteroids.append([random.randint(5, 475), 0, random.randint(0, 2)])
-        asteroidtimer = random.randint(50, 200)
+        asteroidtimer = random.randint(20, 50)#다시 소환되는 시간 지정, 운석이 많이 소환되게끔 난이도 조정을 할 수 있음
     index = 0
     for stone in asteroids:
         stone[1] += 10#운석이 y축으로 내려옴
@@ -101,7 +101,7 @@ text(score, screen.get_rect().centerx, screen.get_rect().centery)#최종 점수�
 pygame.display.flip()
 
 while True:
-    for event in pygame.event.get():
+    for event in pygame.event.get():#마찬가지로 게임 종료 설정
         if event.type == pygame.QUIT:
             pygame.quit()
             exit(0)
