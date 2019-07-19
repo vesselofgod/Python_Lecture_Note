@@ -3,7 +3,7 @@ import random
 
 pygame.init()#게임 초기화
 
-Height, Width = 480, 640
+height, width = 480, 640
 
 screen = pygame.display.set_mode((width,height))#화면 넓이 설정.
 
@@ -40,24 +40,24 @@ except Exception as err:
     exit(0)
 
 def text(arg, x, y):
-    font = pygame.font.Font(None, 24)
-    text = font.render("Score: " + str(arg).zfill(6), True, (0, 0, 0))
+    font = pygame.font.Font('freesansbold.ttf', 24)
+    text = font.render("Score: " + str(arg).zfill(6), True, (255, 255, 255))
     textRect = text.get_rect()#텍스트 객체를 출력위치에 가져옴
     textRect.centerx = x#출력할 때의 x좌표를 설정한다
     textRect.centery = y
     screen.blit(text, textRect)#화면에 텍스트객체를 그린다.
 
 
-running-True #boolean flag
+running=True #boolean flag
 
 while running:
-    screen.fill((255, 255, 255))#화면을 색칠함.
+    screen.fill((0, 0, 0))#화면을 색칠함.
 
         #게임 종료조건, 우측 상단에 X 버튼 누르면 pygame모듈과 프로그램이 종료되는 코드
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit(0)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit(0)
     score += 1#점수 더해줌.
     
     text(score, 400, 10)#폰트 오브젝트를 윈도우에 띄우는 코드 좌표 (400,10)
@@ -69,34 +69,35 @@ while running:
     #spaceshippos = (position[0], 600)
     spaceshippos = (position[0], position[1])#마우스의 위치를 우주선의 위치로 설정
     
-    screen.blit(spaceshipimg, spaceshippos)
+    screen.blit(spaceshipimg, spaceshippos)#우주선을 그려줌.
     spaceshiprect = pygame.Rect(spaceshipimg.get_rect())
     spaceshiprect.left = spaceshippos[0]
     spaceshiprect.top = spaceshippos[1]
     
     asteroidtimer -= 10
     if asteroidtimer <= 0:
+        #운석을 소환함, first,second parameter는 소환위치
         asteroids.append([random.randint(5, 475), 0, random.randint(0, 2)])
         asteroidtimer = random.randint(50, 200)
     index = 0
     for stone in asteroids:
-        stone[1] += 10
-        if stone[1] > 640:
-            asteroids.pop(index)
+        stone[1] += 10#운석이 y축으로 내려옴
+        if stone[1] > 640:#운석이 맵 밖으로 벗어났을 때
+            asteroids.pop(index)#운석을 지워줌.
         stonerect = pygame.Rect(asteroidimgs[stone[2]].get_rect())
         stonerect.left = stone[0]
         stonerect.top = stone[1]
-        if stonerect.colliderect(spaceshiprect):
-            landingsound.play()
+        if stonerect.colliderect(spaceshiprect):#객체의 충돌여보 감지함.
+            landingsound.play()#충돌시에 뜨는 bgm
             asteroids.pop(index)
             running = False
-        screen.blit(asteroidimgs[stone[2]], (stone[0], stone[1]))
+        screen.blit(asteroidimgs[stone[2]], (stone[0], stone[1]))#운석을 그려줌
         index += 1
-    fpsClock.tick(FPS)
+    fpsClock.tick(FPS)#다음 와일문으로 넘어감. loop
     pygame.display.flip()
     
-screen.blit(gameover, (0, 0))#게임오버 문구를 띄움
-text(score, screen.get_rect().centerx, screen.get_rect().centery)
+screen.blit(gameover, (0, 0))#게임오버 이미지를 띄움
+text(score, screen.get_rect().centerx, screen.get_rect().centery)#최종 점수를 맵 중앙에 띄움
 pygame.display.flip()
 
 while True:
