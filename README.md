@@ -1,5 +1,7 @@
-Python Lecture
+#Python Lecture
 Contents(Curriculum)
+
+#조만간 파일을 정리해서 다시 올리겠습니다.
 
 Chapter1 : variable, data type, operator, list, tuple, flow control, Iterative Control
 
